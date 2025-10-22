@@ -1,0 +1,3 @@
+```
+hi. in this nextjs project we will build a renting website for construction vehicles. the main idea is that on each vehicle there are qr codes which link to the product/vehicle sites. on this site, the user can enter his first and last name and add his signature. after confirming a pdf should be generated with the product details and the credentials of the user plus signature. the pdf then should be downloaded to the users device. at a first step we generate 3 dummy vehicle pages. we skip the qr code links for now. please make a plan and update README.md and CLAUDE.md. you can always use the mcp server: playwright, shadcn and context7. for the ui we use shadcn, we should absolutely build mobile first because the main usecase is for mobile phones
+```

@@ -61,3 +61,7 @@ claude
 ## Links
 
 <https://claude-code-idea-board.vercel.app/>
+
+<https://jira.pagu.at/browse/SHOPARCHITECTURE-6791>
+
+<https://github.com/karkow/claude-demo>
