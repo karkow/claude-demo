@@ -177,7 +177,11 @@ interface RentalContract {
 
 - Minimum canvas size: 300x150px on mobile
 - Clear button to reset signature
-- Validation: ensure signature is not empty before allowing submission
+- Validation:
+  - Ensure signature is not empty
+  - Require minimum 10 stroke points (prevents single dot)
+  - Require minimum dimensions (40px wide, 15px tall)
+  - Helpful error message in German for invalid signatures
 - Export as PNG data URL for PDF inclusion
 
 ### PDF Generation

@@ -40,8 +40,11 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
       newErrors.lastName = "Nachname ist erforderlich";
     }
 
+    // Check if signature exists and is valid (not just a dot)
     if (signaturePadRef.current?.isEmpty()) {
       newErrors.signature = "Unterschrift ist erforderlich";
+    } else if (!signaturePadRef.current?.isValid()) {
+      newErrors.signature = "Bitte zeichnen Sie eine vollständige Unterschrift (nicht nur einen Punkt)";
     }
 
     setErrors(newErrors);

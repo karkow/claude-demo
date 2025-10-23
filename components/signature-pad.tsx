@@ -7,6 +7,7 @@ import { RotateCcw } from "lucide-react";
 
 export interface SignaturePadRef {
   isEmpty: () => boolean;
+  isValid: () => boolean;
   clear: () => void;
   toDataURL: () => string;
 }
@@ -22,6 +23,60 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
     useImperativeHandle(ref, () => ({
       isEmpty: () => {
         return sigCanvas.current?.isEmpty() ?? true;
+      },
+      isValid: () => {
+        const canvas = sigCanvas.current;
+        if (!canvas || canvas.isEmpty()) {
+          return false;
+        }
+
+        // Get signature data points
+        const data = canvas.toData();
+
+        // Check if there are multiple stroke points (not just a single dot)
+        let totalPoints = 0;
+        for (const stroke of data) {
+          totalPoints += stroke.length;
+        }
+
+        // Require at least 10 points for a valid signature
+        if (totalPoints < 10) {
+          return false;
+        }
+
+        // Check signature dimensions (bounding box)
+        const canvasElement = canvas.getCanvas();
+        const ctx = canvasElement.getContext('2d');
+        if (!ctx) return false;
+
+        const imageData = ctx.getImageData(0, 0, canvasElement.width, canvasElement.height);
+        const pixels = imageData.data;
+
+        let minX = canvasElement.width;
+        let maxX = 0;
+        let minY = canvasElement.height;
+        let maxY = 0;
+
+        // Find bounding box of signature
+        for (let y = 0; y < canvasElement.height; y++) {
+          for (let x = 0; x < canvasElement.width; x++) {
+            const index = (y * canvasElement.width + x) * 4;
+            const alpha = pixels[index + 3];
+
+            if (alpha > 0) {
+              minX = Math.min(minX, x);
+              maxX = Math.max(maxX, x);
+              minY = Math.min(minY, y);
+              maxY = Math.max(maxY, y);
+            }
+          }
+        }
+
+        const width = maxX - minX;
+        const height = maxY - minY;
+
+        // Require minimum dimensions (at least 40px wide and 15px tall)
+        return width >= 40 && height >= 15;
       },
       clear: () => {
         sigCanvas.current?.clear();
