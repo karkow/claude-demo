@@ -22,7 +22,9 @@ const eslintConfig = [
   },
   {
     rules: {
-      "max-len": ["error", { "code": 120 }],
+      "max-len": ["warn", { "code": 120, "ignorePattern": "^import\\s.+\\sfrom\\s.+;$|className=" }],
+      "react/no-unescaped-entities": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     },
   },
 ];

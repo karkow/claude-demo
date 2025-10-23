@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Construction Vehicle Rental Platform
+
+A mobile-first Next.js application for renting construction vehicles with digital signature capture and PDF contract generation.
+
+## Project Overview
+
+This platform enables construction vehicle rentals through QR codes attached to vehicles. Users scan the QR code, view vehicle details, fill in their information, sign digitally, and receive a rental contract PDF instantly.
+
+### Key Features
+
+- **Mobile-First Design**: Optimized for smartphone use in the field
+- **High-Quality Vehicle Images**: Professional photos with optimized AVIF/WebP formats
+- **QR Code Integration**: Each vehicle has a unique QR code linking to its detail page
+- **Digital Signature**: Touch-based signature capture
+- **PDF Generation**: Automatic rental contract generation with vehicle details, user information, and signature
+- **Instant Download**: PDF downloads directly to user's device
+- **Image Optimization**: Next.js Image component with lazy loading and blur placeholders
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui (New York style)
+- **Icons**: Lucide React
+- **Signature Capture**: react-signature-canvas
+- **PDF Generation**: jsPDF
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+ installed
+- npm/yarn/pnpm
+
+### Installation
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+claude-demo/
+├── app/
+│   ├── layout.tsx                 # Root layout
+│   ├── page.tsx                   # Homepage (vehicle listing)
+│   └── vehicles/
+│       └── [id]/
+│           └── page.tsx           # Vehicle detail page
+├── components/
+│   ├── ui/                        # shadcn components
+│   ├── vehicle-card.tsx           # Vehicle listing card
+│   ├── vehicle-details.tsx        # Vehicle information display
+│   ├── rental-form.tsx            # User information form
+│   └── signature-pad.tsx          # Signature capture component
+├── lib/
+│   ├── utils.ts                   # Utility functions
+│   ├── vehicles.ts                # Vehicle data and types
+│   └── pdf-generator.ts           # PDF generation logic
+└── public/
+    └── vehicle-images/            # Optimized vehicle images (JPEG)
+        ├── excavator.jpg          # 5.0MB - Caterpillar 320
+        ├── bulldozer.jpg          # 1.6MB - Komatsu D65
+        └── wheel-loader.jpg       # 1.3MB - Volvo L90H
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## User Flow
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Scan QR Code**: User scans QR code on construction vehicle
+2. **View Details**: Redirected to vehicle detail page showing specifications
+3. **Enter Information**: Fill in first name, last name
+4. **Sign Contract**: Draw signature on touch-enabled signature pad
+5. **Generate PDF**: Confirm and generate rental contract PDF
+6. **Download**: PDF automatically downloads to device
 
-## Deploy on Vercel
+## Development Guidelines
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+See [CLAUDE.md](./CLAUDE.md) for detailed development guidelines and best practices.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Image Optimization
+
+The project uses Next.js Image component with:
+- **AVIF and WebP formats** for optimal compression (up to 50% smaller)
+- **Lazy loading** on vehicle cards for faster initial page load
+- **Blur placeholders** for smooth loading experience
+- **Quality set to 85** for optimal quality/size balance
+- **Responsive sizing** based on viewport and device pixel ratio
+
+Images are automatically optimized at build time and served in the most efficient format supported by the user's browser.
+
+## Available MCP Servers
+
+- **playwright**: Browser automation and testing
+- **shadcn**: Component management
+- **context7**: Documentation and library reference
+
+## License
+
+This project is private and proprietary.
