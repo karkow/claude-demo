@@ -33,15 +33,15 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
     const newErrors: typeof errors = {};
 
     if (!firstName.trim()) {
-      newErrors.firstName = "First name is required";
+      newErrors.firstName = "Vorname ist erforderlich";
     }
 
     if (!lastName.trim()) {
-      newErrors.lastName = "Last name is required";
+      newErrors.lastName = "Nachname ist erforderlich";
     }
 
     if (signaturePadRef.current?.isEmpty()) {
-      newErrors.signature = "Signature is required";
+      newErrors.signature = "Unterschrift ist erforderlich";
     }
 
     setErrors(newErrors);
@@ -75,11 +75,11 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Personal Information Section */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Your Information</h3>
+        <h3 className="text-lg font-semibold">Ihre Angaben</h3>
 
         <div className="space-y-2">
           <Label htmlFor="firstName" className="text-base">
-            First Name <span className="text-destructive">*</span>
+            Vorname <span className="text-destructive">*</span>
           </Label>
           <Input
             id="firstName"
@@ -91,7 +91,7 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
                 setErrors({ ...errors, firstName: undefined });
               }
             }}
-            placeholder="Enter your first name"
+            placeholder="Geben Sie Ihren Vornamen ein"
             className="h-12 text-base"
             aria-invalid={!!errors.firstName}
             aria-describedby={errors.firstName ? "firstName-error" : undefined}
@@ -105,7 +105,7 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="lastName" className="text-base">
-            Last Name <span className="text-destructive">*</span>
+            Nachname <span className="text-destructive">*</span>
           </Label>
           <Input
             id="lastName"
@@ -117,7 +117,7 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
                 setErrors({ ...errors, lastName: undefined });
               }
             }}
-            placeholder="Enter your last name"
+            placeholder="Geben Sie Ihren Nachnamen ein"
             className="h-12 text-base"
             aria-invalid={!!errors.lastName}
             aria-describedby={errors.lastName ? "lastName-error" : undefined}
@@ -134,10 +134,10 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
       <div className="space-y-4">
         <div>
           <h3 className="text-lg font-semibold mb-1">
-            Digital Signature <span className="text-destructive">*</span>
+            Digitale Unterschrift <span className="text-destructive">*</span>
           </h3>
           <p className="text-sm text-muted-foreground">
-            Please sign below to confirm your rental agreement
+            Bitte unterschreiben Sie unten, um Ihren Mietvertrag zu bestätigen
           </p>
         </div>
 
@@ -158,11 +158,11 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
       {/* Terms and Submit */}
       <div className="space-y-4 pt-4 border-t">
         <div className="rounded-lg bg-muted p-4 text-sm">
-          <p className="font-medium mb-2">Rental Agreement Summary:</p>
+          <p className="font-medium mb-2">Zusammenfassung des Mietvertrags:</p>
           <ul className="space-y-1 text-muted-foreground">
-            <li>Vehicle: {vehicle.name}</li>
-            <li>Daily Rate: ${vehicle.dailyRate}</li>
-            <li>Date: {new Date().toLocaleDateString()}</li>
+            <li>Fahrzeug: {vehicle.name}</li>
+            <li>Tagesrate: €{vehicle.dailyRate}</li>
+            <li>Datum: {new Date().toLocaleDateString('de-DE')}</li>
           </ul>
         </div>
 
@@ -175,12 +175,12 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-              Generating Contract...
+              Vertrag wird erstellt...
             </>
           ) : (
             <>
               <FileDown className="mr-2 h-5 w-5" />
-              Generate & Download Contract
+              Vertrag erstellen & herunterladen
             </>
           )}
         </Button>

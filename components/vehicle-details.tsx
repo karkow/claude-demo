@@ -33,35 +33,46 @@ export function VehicleDetails({ vehicle }: VehicleDetailsProps) {
             </CardDescription>
           </div>
           <div className="text-right shrink-0">
-            <p className="text-3xl md:text-4xl font-bold">${vehicle.dailyRate}</p>
-            <p className="text-sm text-muted-foreground">per day</p>
+            <p className="text-3xl md:text-4xl font-bold">€{vehicle.dailyRate}</p>
+            <p className="text-sm text-muted-foreground">pro Tag</p>
           </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Description */}
         <div>
-          <h3 className="font-semibold mb-2">Description</h3>
+          <h3 className="font-semibold mb-2">Beschreibung</h3>
           <p className="text-muted-foreground">{vehicle.description}</p>
         </div>
 
         {/* Specifications */}
         <div>
-          <h3 className="font-semibold mb-3">Specifications</h3>
+          <h3 className="font-semibold mb-3">Technische Daten</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {Object.entries(vehicle.specifications)
               .filter(([, value]) => value)
-              .map(([key, value]) => (
-                <div
-                  key={key}
-                  className="flex flex-col p-3 rounded-lg bg-muted/50"
-                >
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
-                    {key.replace(/([A-Z])/g, " $1").trim()}
-                  </span>
-                  <span className="font-medium">{value}</span>
-                </div>
-              ))}
+              .map(([key, value]) => {
+                const translations: Record<string, string> = {
+                  weight: "Gewicht",
+                  capacity: "Kapazität",
+                  power: "Leistung",
+                  dimensions: "Abmessungen",
+                  maxReach: "Max. Reichweite",
+                  fuelType: "Kraftstoffart"
+                };
+                const label = translations[key] || key.replace(/([A-Z])/g, " $1").trim();
+                return (
+                  <div
+                    key={key}
+                    className="flex flex-col p-3 rounded-lg bg-muted/50"
+                  >
+                    <span className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                      {label}
+                    </span>
+                    <span className="font-medium">{value}</span>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </CardContent>

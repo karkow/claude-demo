@@ -13,6 +13,13 @@ This document contains development guidelines, architecture decisions, and best 
 - Simple, linear user flows optimized for one-handed use
 - Progressive enhancement for larger screens
 
+**Localization**
+- **Language**: German (de-DE) for all UI text, forms, and PDF contracts
+- **Currency**: Euro (€) for all pricing displays
+- **Date Format**: German locale (DD.MM.YYYY or long format)
+- **Number Format**: German formatting (1.000 kg, 1,2 m³)
+- Vehicle data, form labels, error messages, and PDF content all in German
+
 ### Technology Decisions
 
 **Next.js 15 App Router**
@@ -176,21 +183,27 @@ interface RentalContract {
 
 **Required Content:**
 1. Header: Company name/logo
-2. Document title: "Vehicle Rental Agreement"
-3. Date of rental
+2. Document title: "MIETVERTRAG" (Rental Contract in German)
+3. Date of rental (German format)
 4. Vehicle information:
-   - Name and category
-   - Specifications
-   - Daily rate
+   - Name and category (in German)
+   - Specifications (translated labels)
+   - Daily rate (in EUR €)
 5. Renter information:
-   - First name
-   - Last name
+   - First name (Vorname)
+   - Last name (Nachname)
 6. Signature image
-7. Terms and conditions (optional for v1)
+7. Terms and conditions in German
 
 **File Naming:**
 - Format: `rental-{vehicleId}-{timestamp}.pdf`
 - Example: `rental-excavator-001-20250123.pdf`
+
+**Localization:**
+- All text in German
+- Date format: German locale (e.g., "23. Januar 2025")
+- Currency: EUR (€)
+- Section headings: FAHRZEUGINFORMATIONEN, MIETERINFORMATIONEN, ALLGEMEINE GESCHÄFTSBEDINGUNGEN, UNTERSCHRIFT
 
 ## Implementation Plan
 
@@ -239,6 +252,16 @@ interface RentalContract {
 - [ ] Test PDF generation and download
 - [x] Add loading states
 - [ ] Error handling
+
+### Phase 8: Localization ✅ COMPLETED
+- [x] Translate all UI text to German
+- [x] Translate vehicle data (names, descriptions, specifications)
+- [x] Translate form labels and placeholders
+- [x] Translate error messages
+- [x] Translate PDF contract content
+- [x] Change currency from USD ($) to EUR (€)
+- [x] Update date formatting to German locale
+- [x] Update number formatting to German standards
 
 ## Coding Standards
 

@@ -1,6 +1,6 @@
 # Construction Vehicle Rental Platform
 
-A mobile-first Next.js application for renting construction vehicles with digital signature capture and PDF contract generation.
+A mobile-first Next.js application for renting construction vehicles with digital signature capture and PDF contract generation. **Fully localized in German with Euro currency.**
 
 ## Project Overview
 
@@ -8,6 +8,8 @@ This platform enables construction vehicle rentals through QR codes attached to 
 
 ### Key Features
 
+- **German Localization**: All UI text, forms, and PDF contracts in German
+- **Euro Currency**: Prices displayed in EUR (€)
 - **Mobile-First Design**: Optimized for smartphone use in the field
 - **High-Quality Vehicle Images**: Professional photos with optimized AVIF/WebP formats
 - **QR Code Integration**: Each vehicle has a unique QR code linking to its detail page
@@ -82,11 +84,19 @@ claude-demo/
 ## User Flow
 
 1. **Scan QR Code**: User scans QR code on construction vehicle
-2. **View Details**: Redirected to vehicle detail page showing specifications
-3. **Enter Information**: Fill in first name, last name
+2. **View Details**: Redirected to vehicle detail page showing specifications (in German)
+3. **Enter Information**: Fill in first name (Vorname), last name (Nachname)
 4. **Sign Contract**: Draw signature on touch-enabled signature pad
-5. **Generate PDF**: Confirm and generate rental contract PDF
+5. **Generate PDF**: Confirm and generate rental contract PDF (in German with € pricing)
 6. **Download**: PDF automatically downloads to device
+
+## Localization
+
+- **Language**: German (de-DE)
+- **Currency**: Euro (€)
+- **Date Format**: German locale (DD.MM.YYYY)
+- **Number Format**: German formatting (1.000 instead of 1,000)
+- **All text translated**: UI, forms, error messages, PDF contracts
 
 ## Development Guidelines
 

@@ -61,7 +61,7 @@ export async function generatePDF(options: GeneratePDFOptions): Promise<void> {
     fontSize: 24,
     fontStyle: "bold",
   });
-  addText("Construction Vehicle Rental Agreement", margin, 30, {
+  addText("Baumaschinen-Mietvertrag", margin, 30, {
     fontSize: 12,
   });
 
@@ -70,7 +70,7 @@ export async function generatePDF(options: GeneratePDFOptions): Promise<void> {
   yPosition = 50;
 
   // Document title
-  addText("RENTAL CONTRACT", pageWidth / 2, yPosition, {
+  addText("MIETVERTRAG", pageWidth / 2, yPosition, {
     fontSize: 16,
     fontStyle: "bold",
     align: "center",
@@ -78,14 +78,14 @@ export async function generatePDF(options: GeneratePDFOptions): Promise<void> {
   yPosition += 15;
 
   // Date and Contract ID
-  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+  const formattedDate = new Date(date).toLocaleDateString("de-DE", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-  addText(`Date: ${formattedDate}`, margin, yPosition);
+  addText(`Datum: ${formattedDate}`, margin, yPosition);
   yPosition += 7;
-  addText(`Contract ID: ${vehicleId}-${Date.now()}`, margin, yPosition);
+  addText(`Vertrags-ID: ${vehicleId}-${Date.now()}`, margin, yPosition);
   yPosition += 15;
 
   // Vehicle Information Section
@@ -93,29 +93,40 @@ export async function generatePDF(options: GeneratePDFOptions): Promise<void> {
   doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
 
-  addText("VEHICLE INFORMATION", margin, yPosition, {
+  addText("FAHRZEUGINFORMATIONEN", margin, yPosition, {
     fontSize: 14,
     fontStyle: "bold",
   });
   yPosition += 8;
 
-  addText(`Vehicle: ${vehicleName}`, margin, yPosition, { fontStyle: "bold" });
+  addText(`Fahrzeug: ${vehicleName}`, margin, yPosition, { fontStyle: "bold" });
   yPosition += 7;
-  addText(`Category: ${vehicleCategory}`, margin, yPosition);
+  addText(`Kategorie: ${vehicleCategory}`, margin, yPosition);
   yPosition += 7;
-  addText(`Daily Rental Rate: $${dailyRate.toFixed(2)}`, margin, yPosition);
+  addText(`Tagesmietrate: €${dailyRate.toFixed(2)}`, margin, yPosition);
   yPosition += 10;
 
   // Specifications
-  addText("Specifications:", margin, yPosition, { fontStyle: "bold" });
+  addText("Technische Daten:", margin, yPosition, { fontStyle: "bold" });
   yPosition += 7;
 
   const specs = Object.entries(vehicleSpecifications).filter(
     ([, value]) => value
   );
 
+  const translations: Record<string, string> = {
+    weight: "Gewicht",
+    capacity: "Kapazität",
+    power: "Leistung",
+    dimensions: "Abmessungen",
+    maxReach: "Max. Reichweite",
+    maxreach: "Max. Reichweite",
+    fuelType: "Kraftstoffart",
+    fueltype: "Kraftstoffart"
+  };
+
   for (const [key, value] of specs) {
-    const label = key.replace(/([A-Z])/g, " $1").trim();
+    const label = translations[key] || translations[key.toLowerCase()] || key.replace(/([A-Z])/g, " $1").trim();
     const capitalizedLabel = label.charAt(0).toUpperCase() + label.slice(1);
     addText(`  • ${capitalizedLabel}: ${value}`, margin, yPosition);
     yPosition += 6;
@@ -127,7 +138,7 @@ export async function generatePDF(options: GeneratePDFOptions): Promise<void> {
   doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
 
-  addText("RENTER INFORMATION", margin, yPosition, {
+  addText("MIETERINFORMATIONEN", margin, yPosition, {
     fontSize: 14,
     fontStyle: "bold",
   });
@@ -137,25 +148,25 @@ export async function generatePDF(options: GeneratePDFOptions): Promise<void> {
     fontStyle: "bold",
   });
   yPosition += 7;
-  addText(`Date of Rental: ${formattedDate}`, margin, yPosition);
+  addText(`Mietdatum: ${formattedDate}`, margin, yPosition);
   yPosition += 15;
 
   // Terms and Conditions Section
   doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
 
-  addText("TERMS AND CONDITIONS", margin, yPosition, {
+  addText("ALLGEMEINE GESCHÄFTSBEDINGUNGEN", margin, yPosition, {
     fontSize: 14,
     fontStyle: "bold",
   });
   yPosition += 8;
 
   const terms = [
-    "The renter agrees to use the vehicle only for its intended purpose.",
-    "The renter is responsible for any damage to the vehicle during the rental period.",
-    "Payment is due upon completion of the rental period.",
-    "The vehicle must be returned in the same condition as received.",
-    "The renter must have appropriate licenses and certifications to operate the vehicle.",
+    "Der Mieter verpflichtet sich, das Fahrzeug nur für den vorgesehenen Zweck zu verwenden.",
+    "Der Mieter haftet für alle Schäden am Fahrzeug während der Mietdauer.",
+    "Die Zahlung ist bei Beendigung der Mietdauer fällig.",
+    "Das Fahrzeug muss im gleichen Zustand zurückgegeben werden, wie es empfangen wurde.",
+    "Der Mieter muss über die erforderlichen Lizenzen und Zertifikate zur Bedienung des Fahrzeugs verfügen.",
   ];
 
   doc.setFontSize(10);
@@ -182,13 +193,13 @@ export async function generatePDF(options: GeneratePDFOptions): Promise<void> {
   doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
 
-  addText("SIGNATURE", margin, yPosition, {
+  addText("UNTERSCHRIFT", margin, yPosition, {
     fontSize: 14,
     fontStyle: "bold",
   });
   yPosition += 10;
 
-  addText("Renter Signature:", margin, yPosition);
+  addText("Unterschrift des Mieters:", margin, yPosition);
   yPosition += 5;
 
   // Add signature image
@@ -206,7 +217,7 @@ export async function generatePDF(options: GeneratePDFOptions): Promise<void> {
     yPosition += signatureHeight + 5;
   } catch (error) {
     console.error("Error adding signature to PDF:", error);
-    addText("[Signature could not be embedded]", margin, yPosition);
+    addText("[Unterschrift konnte nicht eingebettet werden]", margin, yPosition);
     yPosition += 10;
   }
 
@@ -221,7 +232,7 @@ export async function generatePDF(options: GeneratePDFOptions): Promise<void> {
   doc.setFontSize(9);
   doc.setTextColor(100, 100, 100);
   addText(
-    "This is a digitally generated rental agreement. For questions, please contact ConstructRent support.",
+    "Dies ist ein digital generierter Mietvertrag. Bei Fragen wenden Sie sich bitte an den ConstructRent-Support.",
     pageWidth / 2,
     footerY,
     { fontSize: 9, align: "center" }

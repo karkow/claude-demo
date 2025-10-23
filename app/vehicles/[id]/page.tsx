@@ -31,14 +31,14 @@ export default function VehiclePage({ params }: PageProps) {
 
         <main className="container px-4 py-8">
           <div className="max-w-2xl mx-auto text-center space-y-4">
-            <h2 className="text-2xl font-bold">Vehicle Not Found</h2>
+            <h2 className="text-2xl font-bold">Fahrzeug nicht gefunden</h2>
             <p className="text-muted-foreground">
-              The vehicle you're looking for doesn't exist or has been removed.
+              Das gesuchte Fahrzeug existiert nicht oder wurde entfernt.
             </p>
             <Button asChild>
               <Link href="/">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Vehicles
+                Zurück zu Fahrzeugen
               </Link>
             </Button>
           </div>
@@ -91,7 +91,7 @@ export default function VehiclePage({ params }: PageProps) {
           <Button variant="ghost" size="sm" asChild className="mb-2">
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Vehicles
+              Zurück zu Fahrzeugen
             </Link>
           </Button>
 
@@ -100,7 +100,7 @@ export default function VehiclePage({ params }: PageProps) {
 
           {/* Rental Form */}
           <div>
-            <h2 className="text-xl font-bold mb-4">Complete Your Rental</h2>
+            <h2 className="text-xl font-bold mb-4">Vervollständigen Sie Ihre Miete</h2>
             <RentalForm vehicle={vehicle} onSubmit={handleSubmit} />
           </div>
         </div>

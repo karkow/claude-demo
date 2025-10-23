@@ -34,8 +34,8 @@ export function VehicleCard({ vehicle }: VehicleCardProps) {
             <CardDescription className="text-sm">{vehicle.category}</CardDescription>
           </div>
           <div className="text-right shrink-0">
-            <p className="text-2xl font-bold">${vehicle.dailyRate}</p>
-            <p className="text-xs text-muted-foreground">per day</p>
+            <p className="text-2xl font-bold">€{vehicle.dailyRate}</p>
+            <p className="text-xs text-muted-foreground">pro Tag</p>
           </div>
         </div>
       </CardHeader>
@@ -46,28 +46,28 @@ export function VehicleCard({ vehicle }: VehicleCardProps) {
         <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
           {vehicle.specifications.power && (
             <div>
-              <span className="font-medium">Power:</span>
+              <span className="font-medium">Leistung:</span>
               <br />
               {vehicle.specifications.power}
             </div>
           )}
           {vehicle.specifications.weight && (
             <div>
-              <span className="font-medium">Weight:</span>
+              <span className="font-medium">Gewicht:</span>
               <br />
               {vehicle.specifications.weight}
             </div>
           )}
           {vehicle.specifications.capacity && (
             <div>
-              <span className="font-medium">Capacity:</span>
+              <span className="font-medium">Kapazität:</span>
               <br />
               {vehicle.specifications.capacity}
             </div>
           )}
           {vehicle.specifications.fuelType && (
             <div>
-              <span className="font-medium">Fuel:</span>
+              <span className="font-medium">Kraftstoff:</span>
               <br />
               {vehicle.specifications.fuelType}
             </div>
@@ -77,7 +77,7 @@ export function VehicleCard({ vehicle }: VehicleCardProps) {
       <CardFooter>
         <Button asChild className="w-full h-12 text-base" size="lg">
           <Link href={`/vehicles/${vehicle.id}`}>
-            View Details
+            Details ansehen
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </Button>

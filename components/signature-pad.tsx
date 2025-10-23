@@ -54,7 +54,7 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
             onEnd={handleEnd}
           />
           <div className="absolute top-2 left-2 text-xs text-muted-foreground pointer-events-none">
-            Sign here
+            Hier unterschreiben
           </div>
         </div>
         <Button
@@ -65,7 +65,7 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
           className="mt-2 w-full md:w-auto"
         >
           <RotateCcw className="mr-2 h-4 w-4" />
-          Clear Signature
+          Unterschrift löschen
         </Button>
       </div>
     );

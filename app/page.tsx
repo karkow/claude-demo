@@ -22,10 +22,10 @@ export default function Home() {
         {/* Page Title */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl mb-2">
-            Available Construction Vehicles
+            Verfügbare Baufahrzeuge
           </h2>
           <p className="text-muted-foreground text-sm md:text-base">
-            Select a vehicle to view details and start your rental
+            Wählen Sie ein Fahrzeug aus, um Details anzuzeigen und zu mieten
           </p>
         </div>
 
