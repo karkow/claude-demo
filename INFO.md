@@ -1,6 +1,6 @@
 # Claude Demo
 
-## Claude
+## Claude Code
 
 <https://www.claude.com/product/claude-code>
 
@@ -28,7 +28,7 @@ List of available MCP server: <https://github.com/modelcontextprotocol/servers?t
 
 ```bash
 claude mcp add playwright npx @playwright/mcp@latest
-```
+``
 
 - Context7 (<https://github.com/upstash/context7>)
 
