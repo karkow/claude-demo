@@ -30,9 +30,7 @@ List of available MCP server: <https://github.com/modelcontextprotocol/servers?t
 claude mcp add playwright npx @playwright/mcp@latest
 ```
 
-```bash
-Context7 (<https://github.com/upstash/context7>)
-```
+- Context7 (<https://github.com/upstash/context7>)
 
 ```bash
 claude mcp add --transport http context7 https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: YOUR_API_KEY"
