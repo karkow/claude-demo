@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, forwardRef, useImperativeHandle } from "react";
+import { useRef, forwardRef, useImperativeHandle, useEffect, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { Button } from "@/components/ui/button";
 import { RotateCcw } from "lucide-react";
@@ -19,6 +19,55 @@ interface SignaturePadProps {
 export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
   ({ onSignatureChange }, ref) => {
     const sigCanvas = useRef<SignatureCanvas>(null);
+    const [signatureData, setSignatureData] = useState<any[]>([]);
+
+    // Preserve signature data on viewport changes (mobile keyboard)
+    useEffect(() => {
+      const handleResize = () => {
+        const canvas = sigCanvas.current;
+        if (canvas && !canvas.isEmpty()) {
+          // Save current signature data before any potential clear
+          const data = canvas.toData();
+          setSignatureData(data);
+
+          // Restore signature after resize
+          setTimeout(() => {
+            if (canvas && data.length > 0) {
+              canvas.fromData(data);
+            }
+          }, 100);
+        }
+      };
+
+      // Handle mobile keyboard specifically with visualViewport API
+      const handleVisualViewportResize = () => {
+        const canvas = sigCanvas.current;
+        if (canvas && !canvas.isEmpty()) {
+          const data = canvas.toData();
+          setSignatureData(data);
+
+          requestAnimationFrame(() => {
+            if (canvas && data.length > 0) {
+              canvas.fromData(data);
+            }
+          });
+        }
+      };
+
+      window.addEventListener('resize', handleResize);
+
+      // Use visualViewport API if available (better for mobile)
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', handleVisualViewportResize);
+      }
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        if (window.visualViewport) {
+          window.visualViewport.removeEventListener('resize', handleVisualViewportResize);
+        }
+      };
+    }, []);
 
     useImperativeHandle(ref, () => ({
       isEmpty: () => {
@@ -89,11 +138,18 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
 
     const handleClear = () => {
       sigCanvas.current?.clear();
+      setSignatureData([]);
       onSignatureChange?.(true);
     };
 
     const handleEnd = () => {
-      const isEmpty = sigCanvas.current?.isEmpty() ?? true;
+      const canvas = sigCanvas.current;
+      if (canvas && !canvas.isEmpty()) {
+        // Save signature data after each stroke
+        const data = canvas.toData();
+        setSignatureData(data);
+      }
+      const isEmpty = canvas?.isEmpty() ?? true;
       onSignatureChange?.(!isEmpty);
     };
 
