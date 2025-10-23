@@ -73,6 +73,12 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
       toast.success("Mietvertrag erfolgreich erstellt!", {
         description: `PDF wurde heruntergeladen • ${vehicle.name} • ${firstName.trim()} ${lastName.trim()} • €${vehicle.dailyRate}/Tag`,
         duration: 6000,
+        className: "!bg-green-50 !text-green-900 !border-green-500 !border-2",
+        style: {
+          backgroundColor: "#f0fdf4",
+          borderColor: "#22c55e",
+          color: "#14532d",
+        },
       });
 
       // Reset form for new rental
