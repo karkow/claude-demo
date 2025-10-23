@@ -177,11 +177,16 @@ interface RentalContract {
 
 - Minimum canvas size: 300x150px on mobile
 - Clear button to reset signature
-- Mobile keyboard protection:
-  - Signature data preserved on viewport resize
+- Signature preservation across all scenarios:
+  - Browser window resize on desktop
+  - Mobile orientation changes (portrait ↔ landscape)
+  - Mobile keyboard opening/closing
+  - Canvas element dimension changes
+  - Uses ResizeObserver to watch canvas directly
   - Uses visualViewport API for mobile keyboard detection
-  - Automatically restores signature when keyboard opens/closes
-  - Prevents signature loss when input fields are focused
+  - Uses orientationchange event for device rotation
+  - Debounced restoration prevents flicker
+  - Automatic signature restoration after resize completes
 - Validation:
   - Ensure signature is not empty
   - Require minimum 10 stroke points (prevents single dot)

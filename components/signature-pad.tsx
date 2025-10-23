@@ -21,22 +21,35 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
     const sigCanvas = useRef<SignatureCanvas>(null);
     const [signatureData, setSignatureData] = useState<any[]>([]);
 
-    // Preserve signature data on viewport changes (mobile keyboard)
+    // Preserve signature data on viewport changes (mobile keyboard, resize, orientation)
     useEffect(() => {
+      let resizeTimeout: NodeJS.Timeout;
+
+      const restoreSignature = () => {
+        const canvas = sigCanvas.current;
+        if (canvas && signatureData.length > 0) {
+          // Wait for canvas to be fully ready after resize
+          setTimeout(() => {
+            if (canvas) {
+              canvas.fromData(signatureData);
+            }
+          }, 150);
+        }
+      };
+
       const handleResize = () => {
         const canvas = sigCanvas.current;
         if (canvas && !canvas.isEmpty()) {
           // Save current signature data before any potential clear
           const data = canvas.toData();
           setSignatureData(data);
-
-          // Restore signature after resize
-          setTimeout(() => {
-            if (canvas && data.length > 0) {
-              canvas.fromData(data);
-            }
-          }, 100);
         }
+
+        // Debounce restoration to avoid multiple rapid resizes
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          restoreSignature();
+        }, 200);
       };
 
       // Handle mobile keyboard specifically with visualViewport API
@@ -45,29 +58,65 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
         if (canvas && !canvas.isEmpty()) {
           const data = canvas.toData();
           setSignatureData(data);
-
-          requestAnimationFrame(() => {
-            if (canvas && data.length > 0) {
-              canvas.fromData(data);
-            }
-          });
         }
+
+        requestAnimationFrame(() => {
+          restoreSignature();
+        });
+      };
+
+      // Handle orientation changes (mobile)
+      const handleOrientationChange = () => {
+        const canvas = sigCanvas.current;
+        if (canvas && !canvas.isEmpty()) {
+          const data = canvas.toData();
+          setSignatureData(data);
+        }
+
+        // Wait for orientation change to complete
+        setTimeout(() => {
+          restoreSignature();
+        }, 300);
       };
 
       window.addEventListener('resize', handleResize);
+      window.addEventListener('orientationchange', handleOrientationChange);
 
       // Use visualViewport API if available (better for mobile)
       if (window.visualViewport) {
         window.visualViewport.addEventListener('resize', handleVisualViewportResize);
       }
 
+      // Watch canvas element directly for size changes
+      let resizeObserver: ResizeObserver | null = null;
+      const canvas = sigCanvas.current;
+      if (canvas) {
+        const canvasElement = canvas.getCanvas();
+        if (canvasElement) {
+          resizeObserver = new ResizeObserver(() => {
+            // Canvas was resized, restore signature if we have data
+            if (signatureData.length > 0) {
+              setTimeout(() => {
+                restoreSignature();
+              }, 100);
+            }
+          });
+          resizeObserver.observe(canvasElement);
+        }
+      }
+
       return () => {
+        clearTimeout(resizeTimeout);
         window.removeEventListener('resize', handleResize);
+        window.removeEventListener('orientationchange', handleOrientationChange);
         if (window.visualViewport) {
           window.visualViewport.removeEventListener('resize', handleVisualViewportResize);
         }
+        if (resizeObserver) {
+          resizeObserver.disconnect();
+        }
       };
-    }, []);
+    }, [signatureData]);
 
     useImperativeHandle(ref, () => ({
       isEmpty: () => {
