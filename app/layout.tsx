@@ -15,8 +15,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ConstructRent - Construction Vehicle Rental",
-  description: "Rent construction vehicles with instant digital contracts. Mobile-first platform for excavators, bulldozers, and more.",
+  title: "ConstructRent - Baumaschinenverleih",
+  description: "Mieten Sie Baumaschinen mit sofortigen digitalen Verträgen. Mobile-first Plattform für Bagger, Bulldozer und mehr.",
+  icons: {
+    icon: "/bagger-logo-80x80.png",
+  },
+  openGraph: {
+    title: "ConstructRent - Baumaschinenverleih",
+    description: "Mieten Sie Baumaschinen mit sofortigen digitalen Verträgen. Mobile-first Plattform für Bagger, Bulldozer und mehr.",
+    type: "website",
+    locale: "de_DE",
+    siteName: "ConstructRent",
+    images: [
+      {
+        url: "/bagger-logo-80x80.png",
+        width: 80,
+        height: 80,
+        alt: "ConstructRent Logo - Baumaschinenverleih",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "ConstructRent - Baumaschinenverleih",
+    description: "Mieten Sie Baumaschinen mit sofortigen digitalen Verträgen. Mobile-first Plattform für Bagger, Bulldozer und mehr.",
+    images: ["/bagger-logo-80x80.png"],
+  },
 };
 
 export default function RootLayout({
