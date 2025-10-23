@@ -28,18 +28,18 @@ export const metadata: Metadata = {
     siteName: "ConstructRent",
     images: [
       {
-        url: "/bagger-logo-80x80.png",
-        width: 80,
-        height: 80,
+        url: "/bagger-logo.png",
+        width: 512,
+        height: 512,
         alt: "ConstructRent Logo - Baumaschinenverleih",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "ConstructRent - Baumaschinenverleih",
     description: "Mieten Sie Baumaschinen mit sofortigen digitalen Verträgen. Mobile-first Plattform für Bagger, Bulldozer und mehr.",
-    images: ["/bagger-logo-80x80.png"],
+    images: ["/bagger-logo.png"],
   },
 };
 
