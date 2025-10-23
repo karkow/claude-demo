@@ -22,10 +22,11 @@ This document contains development guidelines, architecture decisions, and best 
 
 ### Technology Decisions
 
-**Next.js 15 App Router**
+**Next.js 16 App Router with Turbopack**
 - Server Components by default for better performance
 - Client Components only when needed (forms, signature capture, PDF generation)
 - File-based routing in `app/` directory
+- Turbopack bundler enabled by default for faster builds
 
 **shadcn/ui Components**
 - New York style variant
@@ -262,6 +263,16 @@ interface RentalContract {
 - [x] Change currency from USD ($) to EUR (€)
 - [x] Update date formatting to German locale
 - [x] Update number formatting to German standards
+
+### Phase 9: Next.js 16 Migration ✅ COMPLETED
+- [x] Upgrade Next.js from 15.5.6 to 16.0.0
+- [x] Upgrade eslint-config-next to 16.0.0
+- [x] Remove --turbopack flags (now default)
+- [x] Update next.config.ts with v16 image optimization settings
+- [x] Configure image qualities to include 85
+- [x] Test development server with Turbopack
+- [x] Test production build
+- [x] Update documentation
 
 ## Coding Standards
 

@@ -20,9 +20,9 @@ This platform enables construction vehicle rentals through QR codes attached to 
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16 (App Router with Turbopack)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS 4
 - **UI Components**: shadcn/ui (New York style)
 - **Icons**: Lucide React
 - **Signature Capture**: react-signature-canvas
