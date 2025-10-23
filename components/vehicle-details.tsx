@@ -8,9 +8,9 @@ interface VehicleDetailsProps {
 
 export function VehicleDetails({ vehicle }: VehicleDetailsProps) {
   return (
-    <Card>
+    <Card className="overflow-hidden p-0 border-0">
       {vehicle.imageUrl && (
-        <div className="relative w-full h-64 md:h-96 overflow-hidden rounded-t-lg">
+        <div className="relative w-full h-64 md:h-96 rounded-t-lg overflow-hidden">
           <Image
             src={vehicle.imageUrl}
             alt={`${vehicle.name} - ${vehicle.category} heavy equipment rental`}

@@ -11,7 +11,7 @@ interface VehicleCardProps {
 
 export function VehicleCard({ vehicle }: VehicleCardProps) {
   return (
-    <Card className="w-full h-full flex flex-col">
+    <Card className="w-full h-full flex flex-col overflow-hidden p-0 border-0">
       {vehicle.imageUrl && (
         <div className="relative w-full h-48 overflow-hidden rounded-t-lg">
           <Image

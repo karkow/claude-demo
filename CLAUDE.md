@@ -117,29 +117,46 @@ interface RentalContract {
 
 ```typescript
 // Vehicle Card - Lazy loading for performance
-<Image
-  src={vehicle.imageUrl}
-  alt={`${vehicle.name} - ${vehicle.category} available for rent`}
-  fill
-  className="object-cover"
-  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 384px"
-  loading="lazy"
-  quality={85}
-  placeholder="blur"
-  blurDataURL="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%23f0f0f0'/%3E%3C/svg%3E"
-/>
+// IMPORTANT: Card must have overflow-hidden p-0 border-0 to eliminate gaps
+<Card className="w-full h-full flex flex-col overflow-hidden p-0 border-0">
+  <div className="relative w-full h-48 overflow-hidden rounded-t-lg">
+    <Image
+      src={vehicle.imageUrl}
+      alt={`${vehicle.name} - ${vehicle.category} available for rent`}
+      fill
+      className="object-cover"
+      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 384px"
+      loading="lazy"
+      quality={85}
+      placeholder="blur"
+      blurDataURL="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%23f0f0f0'/%3E%3C/svg%3E"
+    />
+  </div>
+</Card>
 
 // Vehicle Details - Priority loading for above-the-fold content
-<Image
-  src={vehicle.imageUrl}
-  alt={`${vehicle.name} - ${vehicle.category} heavy equipment rental`}
-  fill
-  className="object-cover"
-  priority
-  quality={85}
-  sizes="(max-width: 768px) 100vw, 896px"
-/>
+// IMPORTANT: Card must have overflow-hidden p-0 border-0 to eliminate gaps
+<Card className="overflow-hidden p-0 border-0">
+  <div className="relative w-full h-64 md:h-96 rounded-t-lg overflow-hidden">
+    <Image
+      src={vehicle.imageUrl}
+      alt={`${vehicle.name} - ${vehicle.category} heavy equipment rental`}
+      fill
+      className="object-cover"
+      priority
+      quality={85}
+      sizes="(max-width: 768px) 100vw, 896px"
+    />
+  </div>
+</Card>
 ```
+
+**Card Component Styling Notes:**
+- Add `overflow-hidden` to Card to prevent gaps between image and card edges
+- Add `p-0` to remove default Card padding that creates space above image
+- Add `border-0` to remove default Card border
+- Use `rounded-t-lg` on image wrapper div to maintain rounded top corners
+- This ensures images sit flush with the top of cards on both overview and detail pages
 
 ### Form Validation
 
@@ -213,8 +230,10 @@ interface RentalContract {
 - [x] Enhanced alt text for accessibility
 - [x] Add quality parameter and blur placeholders
 - [x] Optimize responsive image sizing
+- [x] Fix image alignment gaps on cards (overflow-hidden, p-0, border-0)
 
 ### Phase 7: Testing and Polish 🚧 IN PROGRESS
+- [x] Test image alignment on overview and detail pages
 - [ ] Test on mobile viewport (375x667, 414x896)
 - [ ] Test signature capture on touch devices
 - [ ] Test PDF generation and download
