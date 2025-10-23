@@ -4,9 +4,11 @@ import { useState, useRef } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { SignaturePad, type SignaturePadRef } from "@/components/signature-pad";
-import { FileDown, Loader2 } from "lucide-react";
+import { FileDown, Loader2, CheckCircle2, Home, FileText } from "lucide-react";
 import type { Vehicle } from "@/lib/vehicles";
+import Link from "next/link";
 
 interface RentalFormProps {
   vehicle: Vehicle;
@@ -21,6 +23,7 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<{
     firstName?: string;
     lastName?: string;
@@ -67,12 +70,79 @@ export function RentalForm({ vehicle, onSubmit }: RentalFormProps) {
         lastName: lastName.trim(),
         signature,
       });
+
+      // Show success message
+      setIsSuccess(true);
+
+      // Scroll to top to show success message
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const handleNewRental = () => {
+    setIsSuccess(false);
+    setFirstName("");
+    setLastName("");
+    setErrors({});
+    signaturePadRef.current?.clear();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Show success message after PDF generation
+  if (isSuccess) {
+    return (
+      <div className="space-y-6">
+        <Alert className="border-green-500 bg-green-50 dark:bg-green-950">
+          <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
+          <AlertTitle className="text-green-800 dark:text-green-300 text-lg font-semibold">
+            Mietvertrag erfolgreich erstellt!
+          </AlertTitle>
+          <AlertDescription className="text-green-700 dark:text-green-400 mt-2 space-y-2">
+            <p>
+              Ihr Mietvertrag wurde erfolgreich erstellt und heruntergeladen.
+              Sie finden die PDF-Datei in Ihren Downloads.
+            </p>
+            <div className="mt-4 pt-4 border-t border-green-200 dark:border-green-800">
+              <p className="text-sm font-medium mb-3">Vertragsinformationen:</p>
+              <ul className="text-sm space-y-1">
+                <li>• Fahrzeug: {vehicle.name}</li>
+                <li>• Mieter: {firstName} {lastName}</li>
+                <li>• Tagesrate: €{vehicle.dailyRate}</li>
+                <li>• Datum: {new Date().toLocaleDateString('de-DE')}</li>
+              </ul>
+            </div>
+          </AlertDescription>
+        </Alert>
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button
+            onClick={handleNewRental}
+            variant="default"
+            className="flex-1 h-12 text-base"
+            size="lg"
+          >
+            <FileText className="mr-2 h-5 w-5" />
+            Neue Miete erstellen
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="flex-1 h-12 text-base"
+            size="lg"
+          >
+            <Link href="/">
+              <Home className="mr-2 h-5 w-5" />
+              Zurück zur Übersicht
+            </Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
