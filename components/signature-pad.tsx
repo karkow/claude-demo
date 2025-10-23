@@ -191,6 +191,13 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
       onSignatureChange?.(true);
     };
 
+    const handleBegin = () => {
+      // Blur any focused input fields to prevent keyboard popup on mobile
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
+    };
+
     const handleEnd = () => {
       const canvas = sigCanvas.current;
       if (canvas && !canvas.isEmpty()) {
@@ -209,8 +216,19 @@ export const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
             ref={sigCanvas}
             canvasProps={{
               className: "w-full h-40 md:h-48 rounded-lg cursor-crosshair",
+              inputMode: "none",
+              tabIndex: -1,
+              role: "img",
+              "aria-label": "Unterschriftsfeld",
+              style: {
+                touchAction: "none",
+                WebkitTouchCallout: "none",
+                WebkitUserSelect: "none",
+                userSelect: "none",
+              },
             }}
             backgroundColor="transparent"
+            onBegin={handleBegin}
             onEnd={handleEnd}
           />
           <div className="absolute top-2 left-2 text-xs text-muted-foreground pointer-events-none">
